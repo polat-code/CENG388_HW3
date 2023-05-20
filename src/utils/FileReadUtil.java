@@ -1,12 +1,13 @@
-
-
 package utils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class FileReadUtil {
@@ -34,7 +35,7 @@ public class FileReadUtil {
     public static String readBibFiles(String filePath){
         List<String> fileNames = readFilenamesInDirectory(filePath);
         String csvString="";
-        for (int i = 0; i < fileNames.size(); i+=2) {
+        for (int i = 1; i < fileNames.size(); i+=2) {
             File file = new File(filePath+"/"+fileNames.get(i));
             try (BufferedReader br = new BufferedReader(new FileReader(file))) {
                 String line=br.readLine();
@@ -132,6 +133,40 @@ public class FileReadUtil {
         return csvLine;
     }
 
+
+    public static String readRawJson(String path) throws IOException {
+        File file=new File(path);
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bf = new BufferedReader(fileReader);
+        return bf.readLine();
+
+    }
+
+    public static void readJson(){
+        JSONParser jsonParser = new JSONParser();
+        try {
+            Object obj = jsonParser.parse(new FileReader("readingList.json"));
+
+            JSONObject jsonObject = (JSONObject) obj;
+            String reading_list_id = (String) jsonObject.get("reading_list_id");
+
+            String creator_researcher_name = (String) jsonObject.get("creator_researcher_name");
+
+            String reading_list_name = (String) jsonObject.get("reading_list_name");
+
+            int number_of_papers = (int) jsonObject.get("number_of_papers");
+
+            JSONArray name_of_papers = (JSONArray) jsonObject.get("name_of_papers");
+
+            Iterator<String> iterator = name_of_papers.iterator();
+            while (iterator.hasNext()){
+                System.out.println(iterator.next());
+            }
+
+        } catch (IOException | ParseException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
 
