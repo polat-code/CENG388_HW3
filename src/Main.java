@@ -1,10 +1,12 @@
 
 /*
+import org.json.simple.parser.ParseException;
 import utils.FileReadUtil;
 import utils.FileWriteUtil;
 import views.UserView;
 */
 import models.User;
+import org.json.simple.parser.ParseException;
 import views.UserView;
 
 import java.awt.event.ActionEvent;
@@ -15,14 +17,17 @@ import java.util.List;
 import java.util.Map;
 
 
+import java.io.IOException;
+
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException, ParseException {
 
     /*
         String a = FileReadUtil.readBibFiles("Homework3");
 
         FileWriteUtil.WriteCsvFile(a);
         FileWriteUtil.createReadingListOnJsonFile("abc","x");
+        FileWriteUtil.addPaperToReadingList(0,"asd");
 
         System.out.println("Hello world!");
 
